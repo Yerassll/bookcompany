@@ -11,23 +11,19 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Book структура
 type Book struct {
 	ID     string `json:"id"`
 	Title  string `json:"title"`
 	Author string `json:"author"`
 }
 
-// Временное хранилище (имитируем базу данных)
 var books []Book
 
-// Получить все книги (READ)
 func getBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(books)
 }
 
-// Получить одну книгу по ID (READ)
 func getBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -42,7 +38,6 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
-// Создать книгу (CREATE)
 func createBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var book Book
@@ -52,7 +47,6 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(book)
 }
 
-// Обновить книгу (UPDATE)
 func updateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -73,7 +67,6 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
-// Удалить книгу (DELETE)
 func deleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -89,11 +82,9 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
-// Главная функция
 func main() {
 	r := mux.NewRouter()
 
-	// Демо-данные
 	books = append(books, Book{ID: "1", Title: "1984", Author: "George Orwell"})
 	books = append(books, Book{ID: "2", Title: "The Hobbit", Author: "J.R.R. Tolkien"})
 
